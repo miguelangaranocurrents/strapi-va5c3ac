@@ -129,6 +129,13 @@ const relationsApi = contentManagerApi.injectEndpoints({
           _q: queryArgs.params?._q,
           idsToOmit: queryArgs.params?.idsToOmit,
           idsToInclude: queryArgs.params?.idsToInclude,
+          /**
+           * The source document (or component) decides which relations are available,
+           * so it must be part of the cache key. Otherwise two fields with the same
+           * target and omit list (e.g. two dynamic zone components) share results.
+           */
+          id: queryArgs.params?.id,
+          locale: queryArgs.params?.locale,
         };
       },
       merge: (currentCache, newItems) => {

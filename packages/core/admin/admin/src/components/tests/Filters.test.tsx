@@ -157,6 +157,19 @@ describe('Filters', () => {
     expect(screen.queryByRole('button', { name: 'Add filter' })).not.toBeInTheDocument();
   });
 
+  it('should add a boolean filter with its untouched False value', async () => {
+    const { user } = render({
+      options: [{ name: 'isAvailable', label: 'isAvailable', type: 'boolean' }],
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Filters' }));
+    await user.click(await screen.findByRole('combobox', { name: 'Select field' }));
+    await user.click(await screen.findByRole('option', { name: 'isAvailable' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Add filter' }));
+
+    await screen.findByText('isAvailable is false');
+  });
+
   it("should remove a filter from the list when the 'Remove filter' button is clicked", async () => {
     const { user } = render();
 

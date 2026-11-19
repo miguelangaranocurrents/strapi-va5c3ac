@@ -95,6 +95,8 @@ describe('mutateEditViewHook – label action injection and localization', () =>
     if (action) {
       render(action);
       expect(screen.getByText(/This value is unique for the selected locale/i)).toBeInTheDocument();
+      // The label action must not leak the message descriptor object into a DOM attribute
+      expect(document.querySelector('[title="[object Object]"]')).toBeNull();
     }
   });
 
